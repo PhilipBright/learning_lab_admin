@@ -1,27 +1,32 @@
 export const navLink = [
     {
         name: 'Dashboard',
-        href: '/',
-        icon: 'Home'
+        href: '/dashboard',
+        icon: 'HomeIcon'
     },
     {
-        name: 'Orders',
-        href: '/users',
-        icon: 'ShoppingCart'
+        name: 'Enrollments',
+        href: '/enrollmentTable',
+        icon: 'ShoppingCartIcon'
     },
     {
         name: 'Courses',
-        href: '/products',
-        icon: 'Package'
+        href: '/courseTable',
+        icon: 'PackageIcon'
+    },
+    {
+        name: 'Subscriptions',
+        href: '/subscriptionTable',
+        icon: 'RepeatIcon'
     },
     {
         name: 'Users',
-        href: '/orders',
-        icon: 'Users'
+        href: '/userTable',
+        icon: 'UsersIcon'
     },
     {
         name: 'Teachers',
-        href: '/settings',
-        icon: 'Users'
+        href: '/teacherTable',
+        icon: 'TeacherIcon'
     }
 ]

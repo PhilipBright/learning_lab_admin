@@ -3,7 +3,7 @@ import React from 'react'
 const CourseTable = () => {
   return (
     <div>
-      CourseTable
+      CourseTables
     </div>
   )
 }

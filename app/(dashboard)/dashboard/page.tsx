@@ -1,4 +1,5 @@
 import Analysis from '@/components/blocks/Analysis'
+import RecentEnroll from '@/components/blocks/RecentEnroll'
 import Students from '@/components/blocks/Students'
 import Subscribers from '@/components/blocks/Subscribers'
 import Teacher from '@/components/blocks/Teacher'
@@ -16,6 +17,7 @@ const Dashboard = () => {
             <Students/>
              <div className='lg:w-[71rem] grid grid-cols-1 gap-4 lg:grid-cols-7'>
                 <Analysis/>
+                <RecentEnroll/>
             </div>
         </div>
     </main>
