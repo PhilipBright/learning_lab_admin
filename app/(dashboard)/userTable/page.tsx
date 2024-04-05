@@ -49,15 +49,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Payment } from "@/constant"
-import {data }from "@/constant/data"
+import { Student } from "@/constant"
+import { userData }from "@/constant/data"
 import { Badge } from "@/components/ui/badge"
 import { Plus } from "lucide-react"
+import BreadCrumb from '@/components/blocks/BreadCrumb'
+import UserDialog from "@/components/dialogs/UserDialog"
 
 
 
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Student>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -175,7 +176,7 @@ export const columns: ColumnDef<Payment>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
+      const student = row.original
 
       return (
         <DropdownMenu>
@@ -188,7 +189,7 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(student.id)}
             >
               Copy payment ID
             </DropdownMenuItem>
@@ -212,7 +213,7 @@ const UserTable = () => {
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
-    data,
+    data: userData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -231,7 +232,8 @@ const UserTable = () => {
   })
 
   return (
-    <div className="w-full">
+    <div className="w-full p-4">
+      <h1 className=' text-4xl font-bold'>Student Data</h1>
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter emails..."
@@ -242,26 +244,8 @@ const UserTable = () => {
           className="max-w-sm"
         />
         <div className="flex items-center">
-          <div className="flex items-center border rounded-lg px-3 py-2 bg-black text-white mr-4 text-sm">
-          <Plus className=" border rounded-[50%] w-4 h-4 mr-2" />
-          <Dialog>
-  <DialogTrigger>
-  
-    New User
-    
-    </DialogTrigger>
-  <DialogContent>
-    <DialogHeader>
-      <DialogTitle>Are you absolutely sure?</DialogTitle>
-      <DialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </DialogDescription>
-    </DialogHeader>
-  </DialogContent>
-</Dialog>
-          </div>
-        
+          
+          <UserDialog/>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

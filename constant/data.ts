@@ -1,4 +1,4 @@
-import { Payment } from "."
+import { Student, Instructor } from "."
 
 
 export const navLink = [
@@ -33,7 +33,7 @@ export const navLink = [
         icon: 'TeacherIcon'
     }
 ]
-export const data: Payment[] = [
+export const userData: Student[] = [
 
     {
       id: "3u1reuv4",
@@ -63,3 +63,22 @@ export const data: Payment[] = [
       subscription: "Premium",
     },
   ]
+export const instructorData: Instructor[] = [
+    {
+        id: "bhqecj4p",
+        profile: "https://randomuser.me/api/portraits.jpg",
+        username: "Bright Bright",
+        email: "Bright@gmail.com",
+        registerDate: "2023-08-31",
+        role: "Teacher",
+
+      },
+      {
+        id: "bhqecj4p",
+        profile: "https://randomuser.me/api/portraits.jpg",
+        username: "Bright Bright",
+        email: "Bright@gmail.com",
+        registerDate: "2023-08-31",
+        role: "Teacher",
+      },
+]
