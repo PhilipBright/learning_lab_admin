@@ -15,3 +15,13 @@ export type Student = {
     role: string
     email: string
   }
+  export type Courses = {
+    id: string
+    title: string
+    category: string
+    description: string
+    date: String
+    type: string
+    duration: string
+    level: string
+  }
