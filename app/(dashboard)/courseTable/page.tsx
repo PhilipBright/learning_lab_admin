@@ -128,8 +128,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Student } from "@/constant"
-import { userData }from "@/constant/data"
+import { Courses, Student } from "@/constant"
+import { courseData, userData }from "@/constant/data"
 import { Badge } from "@/components/ui/badge"
 import { Plus } from "lucide-react"
 import BreadCrumb from '@/components/blocks/BreadCrumb'
@@ -137,7 +137,7 @@ import UserDialog from "@/components/dialogs/UserDialog"
 
 
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<Courses>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -176,79 +176,109 @@ export const columns: ColumnDef<Student>[] = [
     cell: ({ row }) => <div>{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "username",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Username
+          Title
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("username")}</div>,
+    cell: ({ row }) => <div>{row.getValue("title")}</div>,
   },
   {
-    accessorKey: "email",
+    accessorKey: "description",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Description
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("description")}</div>,
   },
   {
-    accessorKey: "enrollmentId",
+    accessorKey: "category",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Enrollment
+          Category
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("enrollmentId")}</div>,
+    cell: ({ row }) => <div>{row.getValue("category")}</div>,
   },
   {
-    accessorKey: "subscription",
+    accessorKey: "type",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Subscription
+          Type
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className=" w-32 h-6 rounded-lg text-center border border-blue-300">{row.getValue("subscription")}</div>,
+    cell: ({ row }) => <div className=" w-32 h-6 rounded-lg text-center border border-blue-300">{row.getValue("type")}</div>,
   },
   {
-    accessorKey: "registerDate",
+    accessorKey: "duration",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Register Date
+          Duration
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("registerDate")}</div>,
+    cell: ({ row }) => <div>{row.getValue("duration")} Minutes</div>,
+  },
+  {
+    accessorKey: "level",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Level
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div>{row.getValue("level")}</div>,
+  },
+  {
+    accessorKey: "date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div>{row.getValue("date")}</div>,
   },
   
   {
@@ -292,7 +322,7 @@ const CourseTable = () => {
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
-    data: userData,
+    data: courseData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -312,13 +342,13 @@ const CourseTable = () => {
 
   return (
     <div className="w-full p-4">
-      <h1 className=' text-4xl font-bold'>Student Data</h1>
+      <h1 className=' text-4xl font-bold'>Courses</h1>
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter category..."
+          value={(table.getColumn("category")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("category")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

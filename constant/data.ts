@@ -1,4 +1,4 @@
-import { Student, Instructor } from "."
+import { Student, Instructor, Courses } from "."
 
 
 export const navLink = [
@@ -81,4 +81,18 @@ export const instructorData: Instructor[] = [
         registerDate: "2023-08-31",
         role: "Teacher",
       },
+]
+
+export const courseData: Courses[] = [
+  {
+    id: "3u1reuv4",
+    title: "Introduction to Programming",
+    description: "This course is designed to introduce students to the basics of programming",
+    category: "Programming",
+    date: "2019-01-30",
+    type: "Premium",
+    duration: "40",
+    level: "Intermediate",
+
+  }
 ]
