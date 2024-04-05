@@ -72,9 +72,9 @@ export function Chartbar() {
         />
         <Bar
           dataKey='total'
-          fill='currentColor'
+          fill='var(--blue)'
           radius={[4, 4, 0, 0]}
-          className='fill-primary'
+          
         />
       </BarChart>
     </ResponsiveContainer>

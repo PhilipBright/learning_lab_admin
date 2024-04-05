@@ -7,7 +7,7 @@ const RecentEnroll = () => {
   return (
     <Card className='col-span-1 md:col-span-3'>
     <CardHeader>
-      <CardTitle>Recent Sales</CardTitle>
+      <CardTitle>Recent Enrollments</CardTitle>
       <CardDescription>
         You made 265 sales this month.
       </CardDescription>

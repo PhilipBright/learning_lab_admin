@@ -11,7 +11,7 @@ const Students = () => {
               <Users2 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+573</div>
+              <div className="text-2xl font-bold text-green-400">+573</div>
               <p className="text-xs text-muted-foreground">
                 +201 since last hour
               </p>
