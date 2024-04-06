@@ -134,6 +134,7 @@ import { Badge } from "@/components/ui/badge"
 import { Plus } from "lucide-react"
 import BreadCrumb from '@/components/blocks/BreadCrumb'
 import UserDialog from "@/components/dialogs/UserDialog"
+import Image from "next/image"
 
 
 
@@ -174,6 +175,21 @@ export const columns: ColumnDef<Courses>[] = [
       )
     },
     cell: ({ row }) => <div>{row.getValue("id")}</div>,
+  },
+  {
+    accessorKey: "image",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Image
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <Image src={row.getValue("image")} alt="image" width={40} height={40}></Image>,
   },
   {
     accessorKey: "title",
@@ -233,7 +249,7 @@ export const columns: ColumnDef<Courses>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className=" w-32 h-6 rounded-lg text-center border border-blue-300">{row.getValue("type")}</div>,
+    cell: ({ row }) => <div className=" w-16 h-6 rounded-lg text-center border border-blue-300">{row.getValue("type")}</div>,
   },
   {
     accessorKey: "duration",

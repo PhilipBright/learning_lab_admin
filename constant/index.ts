@@ -17,6 +17,7 @@ export type Student = {
   }
   export type Courses = {
     id: string
+    image: string
     title: string
     category: string
     description: string
@@ -24,4 +25,17 @@ export type Student = {
     type: string
     duration: string
     level: string
+  }
+
+  export type Subscriptions = {
+    id: string
+    title: string
+    price: string
+    duration: string
+    type: string
+    benefits: {
+      id: number;
+      benefit: string;
+  }[];
+   
   }
