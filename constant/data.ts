@@ -110,6 +110,42 @@ export const subscriptionData: Subscriptions[] = [
       id:1,
       benefit: "Access to free courses"
       },
+     
+      {
+        id:2,
+        benefit: "Exportable certificate",
+      
+      },
+      {
+        id:3,
+        benefit: "Access to high quality videos",
+      },
+      {
+        id:4,
+        benefit: "24/7 customer support"
+      },
+      {
+        id:5,
+        benefit: "Responsive Design for Mobiles"
+      },
+      {
+        id:6,
+        benefit: "Only One Device Access"
+      },
+    
+    ]
+  },
+  {
+    id: "3u1reuv4",
+    type: "Premium",
+    title: "Premium",
+    price: "199",
+    duration: "30",
+    benefits:[
+      {
+      id:1,
+      benefit: "Access to unlimited courses"
+      },
       {
         id:2,
         benefit: "Appointment to instructors",
@@ -141,8 +177,82 @@ export const subscriptionData: Subscriptions[] = [
       {
         id:8,
         benefit: "Responsive Design for Mobiles"
-      }
+      },
+      {
+        id:9,
+        benefit: "Only One Device Access"
+      },
+      {
+        id:10,
+        benefit: "Discount with Referral",  
+      
+      },
+      {
+        id:11,
+        benefit: "Exclusive Discounts and Offers",
+      
+      },
+     
     
+    ]
+  },
+  {
+    id: "3u1reuv5",
+    type: "Business",
+    title: "Business",
+    price: "599",
+    duration: "30",
+    benefits:[
+      {
+      id:1,
+      benefit: "Access to unlimited courses"
+      },
+      {
+        id:2,
+        benefit: "Appointment to instructors",
+      
+      },
+      {
+        id:3,
+        benefit: "Video call with instructors",
+      
+      },
+      {
+        id:4,
+        benefit: "Chat with instructors",
+      
+      },
+      {
+        id:5,
+        benefit: "Exportable certificate",
+      
+      },
+      {
+        id:6,
+        benefit: "Access to high quality videos",
+      },
+      {
+        id:7,
+        benefit: "24/7 customer support"
+      },
+      {
+        id:8,
+        benefit: "Responsive Design for Mobiles"
+      },
+      {
+        id:9,
+        benefit: "15 Devices Access"
+      },
+      {
+        id:10,
+        benefit: "Membership Discount with Referral",  
+      },
+      {
+        id:11,
+        benefit: "Exclusive Discounts and Offers",
+      
+      },
+     
     ]
   }
 ]

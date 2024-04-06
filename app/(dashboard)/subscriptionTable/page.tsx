@@ -24,14 +24,14 @@ import { Subscriptions } from "@/constant"
 
 const SubscriptionTable = () => {
     return (
-      <div>
+      <div className="flex justify-between p-4">
         {subscriptionData.map((data: Subscriptions, index) => {
           return (
             <Card className="w-[350px]" key={index}>
             <CardHeader>
               <CardTitle className="text-3xl text-primary">{data.type}</CardTitle>
               <CardTitle className="text-5xl flex items-end">${data.price} <span className="text-2xl">/Month</span></CardTitle>
-              {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
+              <CardDescription>Unlock your potential with our range of plans, designed to fit your learning journey, whether you're just starting out or aiming for professional excellence.</CardDescription>
             </CardHeader>
             <CardContent>
               
