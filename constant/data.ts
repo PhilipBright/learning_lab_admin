@@ -1,4 +1,4 @@
-import { Student, Instructor, Courses } from "."
+import { Student, Instructor, Courses, Subscriptions } from "."
 
 
 export const navLink = [
@@ -86,6 +86,7 @@ export const instructorData: Instructor[] = [
 export const courseData: Courses[] = [
   {
     id: "3u1reuv4",
+    image: "/admin/public/images/course2.jpeg",
     title: "Introduction to Programming",
     description: "This course is designed to introduce students to the basics of programming",
     category: "Programming",
@@ -94,5 +95,54 @@ export const courseData: Courses[] = [
     duration: "40",
     level: "Intermediate",
 
+  }
+]
+
+export const subscriptionData: Subscriptions[] = [
+  {
+    id: "3u1reuv4",
+    type: "Free",
+    title: "Free",
+    price: "0",
+    duration: "30",
+    benefits:[
+      {
+      id:1,
+      benefit: "Access to free courses"
+      },
+      {
+        id:2,
+        benefit: "Appointment to instructors",
+      
+      },
+      {
+        id:3,
+        benefit: "Video call with instructors",
+      
+      },
+      {
+        id:4,
+        benefit: "Chat with instructors",
+      
+      },
+      {
+        id:5,
+        benefit: "Exportable certificate",
+      
+      },
+      {
+        id:6,
+        benefit: "Access to high quality videos",
+      },
+      {
+        id:7,
+        benefit: "24/7 customer support"
+      },
+      {
+        id:8,
+        benefit: "Responsive Design for Mobiles"
+      }
+    
+    ]
   }
 ]
