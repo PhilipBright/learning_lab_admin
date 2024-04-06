@@ -21,17 +21,22 @@ import {
 import { CircleCheck, CircleCheckBig } from "lucide-react"
 import { subscriptionData } from "@/constant/data"
 import { Subscriptions } from "@/constant"
+import BreadCrumb from "@/components/blocks/BreadCrumb"
 
 const SubscriptionTable = () => {
     return (
-      <div className="flex justify-between p-4">
+      <div className="w-full p-4">
+      <h1 className=' text-4xl font-bold pb-4'>Instructor Data</h1>
+      <BreadCrumb source="Admin" destination="Subscription" />
+      <div className="flex justify-between pt-8">
+       
         {subscriptionData.map((data: Subscriptions, index) => {
           return (
             <Card className="w-[350px]" key={index}>
             <CardHeader>
-              <CardTitle className="text-3xl text-primary">{data.type}</CardTitle>
-              <CardTitle className="text-5xl flex items-end">${data.price} <span className="text-2xl">/Month</span></CardTitle>
-              <CardDescription>Unlock your potential with our range of plans, designed to fit your learning journey, whether you're just starting out or aiming for professional excellence.</CardDescription>
+              <CardTitle className="text-3xl text-primary pb-4">{data.type}</CardTitle>
+              <CardTitle className="text-5xl flex items-end pb-2 ">${data.price} <span className="text-2xl">/Month</span></CardTitle>
+              <CardDescription>Unlock your potential with our range of plans, designed to fit your learning journey</CardDescription>
             </CardHeader>
             <CardContent>
               
@@ -53,6 +58,7 @@ const SubscriptionTable = () => {
           )
         })}
       </div>
+    </div>
     )
 }
 export default SubscriptionTable
