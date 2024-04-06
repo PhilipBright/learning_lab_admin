@@ -1,4 +1,4 @@
-import { Student, Instructor, Courses, Subscriptions } from "."
+import { Student, Instructor, Courses, Subscriptions, Enrollments } from "."
 
 
 export const navLink = [
@@ -182,13 +182,9 @@ export const subscriptionData: Subscriptions[] = [
         id:9,
         benefit: "Only One Device Access"
       },
+
       {
         id:10,
-        benefit: "Discount with Referral",  
-      
-      },
-      {
-        id:11,
         benefit: "Exclusive Discounts and Offers",
       
       },
@@ -243,12 +239,9 @@ export const subscriptionData: Subscriptions[] = [
         id:9,
         benefit: "15 Devices Access"
       },
+     
       {
         id:10,
-        benefit: "Membership Discount with Referral",  
-      },
-      {
-        id:11,
         benefit: "Exclusive Discounts and Offers",
       
       },
@@ -256,3 +249,15 @@ export const subscriptionData: Subscriptions[] = [
     ]
   }
 ]
+export const enrollmentData: Enrollments[] = [
+    {
+        id: "3u1reuv4",
+        username: "Philip Bright",
+        email: "philipbright@gmail.com",
+        payment: "Paypal",
+        purchaseDate: "2019-01-30",
+        total: "199",
+        subscription: "Premium",
+
+    },
+  ]

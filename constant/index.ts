@@ -39,3 +39,12 @@ export type Student = {
   }[];
    
   }
+  export type Enrollments = {
+    id: string
+    username: string
+    subscription: string
+    purchaseDate: String
+    payment: string
+    email: string
+    total: string
+  }
