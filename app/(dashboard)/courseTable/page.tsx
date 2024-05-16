@@ -1,82 +1,3 @@
-// import React from 'react'
-// import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-// import { BarChart4, Clock, Delete, DollarSign, Pencil, Recycle, Star, TicketPlus, Trash2, Users } from 'lucide-react'
-// import Image from 'next/image'
-// import course2 from '@/public/images/course2.jpeg'
-// import TotalCourses from '@/components/blocks/TotalCourses'
-// import BreadCrumb from '@/components/blocks/BreadCrumb'
-
-// const CourseTable = () => {
-//   return (
-//     <main className='gap-4 p-4 md:gap-8 '>
-//   <h1 className=' text-4xl font-bold text-black pb-8 '>Courses</h1>
-//   <BreadCrumb source='Admin' destination='Courses'/>
-//       <div className='flex pt-6'>
-//       <Card className='w-[100%]'>
-//             <CardHeader className="flex flex-row items-center space-y-0 pb-6">
-//             <Image src={course2} alt='Course Image' className=' w-[50%] mr-8 rounded-xl' />
-
-//              <div>
-//               <h1 className=' text-3xl font-bold pb-4'>Introduction to Programming</h1>
-//               <p className='text-muted-foreground w-[30rem] text-justify pb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia enim fuga dolor autem Officia enim fuga dolor autem Officia enim fuga dolor autem Officia enim fuga dolor autem Officia enim fuga dolor autem Officia enim fuga dolor autem </p>
-//               <div className='flex items-center   my-2 pt-1  text-white'>
-//                 <div className='bg-[#007bff] flex p-2 items-center rounded-lg w-50 mr-4'>
-//                 <h3 className=' pr-2'>By Philip Bright</h3>
-//                 <Star fill='#facc14' className='h-4 w-4 text-yellow-400' />
-//                 <p>4.8 rating</p>
-//                 </div>
-//                <div>
-//                <h1 className='text-lg bg-red-500 p-1 rounded-lg text-white font-medium'>$360</h1>
-//                </div>
-               
-//               </div>
-//               <div className='flex items-center mt-4 '>
-//                 <div className='flex items-center mr-3'>
-//                 <Clock className='h-5 w-5 text-blue-400 mr-2' />
-//                 <span className=''>40 Minutes</span>
-//                 </div>
-//                 <div className='flex items-center mr-3'>
-//                 <BarChart4 className='h-5 w-5 text-blue-400 mr-2' />
-//                 <span className=''>Beginner</span>
-                
-//                 </div>
-//                 <div className='flex items-center'>
-//                <TicketPlus className='h-5 w-5 text-blue-400 mr-2' />
-//                 <span className=''>Premium</span>
-                
-//                 </div>
-
-               
-//               </div>
-//              </div>
-//              <div>
-             
-//              </div>
-           
-//             </CardHeader>
-           
-//           </Card>
-//           <div>
-//             <div className='border border-gray-300 p-2 rounded-lg cursor-pointer'>
-//             <Pencil className='h-6 w-6 text-blue-400 ' />
-//             </div>
-//             <div className='border border-gray-300 rounded-lg p-2'>
-//           <Trash2 className='h-6 w-6 text-red-400 ' />
-//             </div>
-            
-//           </div>
-          
-//       </div>
-     
-     
-//     </main>
-    
-//   )
-// }
-
-// export default CourseTable
-
-
 "use client"
 
 import * as React from "react"
@@ -98,14 +19,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 
 
 import { Button } from "@/components/ui/button"
@@ -128,17 +41,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Courses, Student } from "@/constant"
-import { courseData, userData }from "@/constant/data"
-import { Badge } from "@/components/ui/badge"
-import { Plus } from "lucide-react"
-import BreadCrumb from '@/components/blocks/BreadCrumb'
-import UserDialog from "@/components/dialogs/UserDialog"
+
+
+
+
 import Image from "next/image"
-
-
+import { Courses } from "@/constant/index"
+import axios from "axios"
+import { useEffect } from "react"
+import { Pagination_course } from "@/components/ui/Course_pagination"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export const columns: ColumnDef<Courses>[] = [
+  
   {
     id: "select",
     header: ({ table }) => (
@@ -162,7 +78,7 @@ export const columns: ColumnDef<Courses>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "_id",
     header: ({ column }) => {
       return (
         <Button
@@ -174,7 +90,7 @@ export const columns: ColumnDef<Courses>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className=" w-16 truncate">{row.getValue("_id")}</div>,
   },
   {
     accessorKey: "image",
@@ -219,7 +135,7 @@ export const columns: ColumnDef<Courses>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("description")}</div>,
+    cell: ({ row }) => <div className=" w-32 h-20 lowercase overflow-hidden text-ellipsis">{row.getValue("description")}</div>,
   },
   {
     accessorKey: "category",
@@ -237,7 +153,7 @@ export const columns: ColumnDef<Courses>[] = [
     cell: ({ row }) => <div>{row.getValue("category")}</div>,
   },
   {
-    accessorKey: "type",
+    accessorKey: "subscriptionType",
     header: ({ column }) => {
       return (
         <Button
@@ -249,7 +165,7 @@ export const columns: ColumnDef<Courses>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className=" w-16 h-6 rounded-lg text-center border border-blue-300">{row.getValue("type")}</div>,
+    cell: ({ row }) => <div className=" w-16 h-6 rounded-lg text-center border border-blue-300">{row.getValue("subscriptionType")}</div>,
   },
   {
     accessorKey: "duration",
@@ -281,6 +197,23 @@ export const columns: ColumnDef<Courses>[] = [
     },
     cell: ({ row }) => <div>{row.getValue("level")}</div>,
   },
+
+  {
+    accessorKey: "video",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Video
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div>{row.getValue("video")}</div>,
+  },
+  
   {
     accessorKey: "date",
     header: ({ column }) => {
@@ -301,28 +234,36 @@ export const columns: ColumnDef<Courses>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const student = row.original
+      const course = row.getValue('_id')
+
+
+
+      const handleDeleteClick = () => {
+
+      }
 
       return (
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(student.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <DotsHorizontalIcon className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem>
+
+            <Link href={`/editCourses/${course}`}>
+            Edit
+            </Link>
+                   
+                  </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleDeleteClick}>
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       )
     },
   },
@@ -330,6 +271,8 @@ export const columns: ColumnDef<Courses>[] = [
 
 const CourseTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [courses, setCourses] = React.useState([]);
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
@@ -337,8 +280,40 @@ const CourseTable = () => {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const [totalPages, setTotalPages] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const coursesPerPage = 6;
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+  
+          const countResponse = await axios.get(`http://localhost:5002/api/getCoursesCount`);
+          const totalCount = countResponse.data.totalCount;
+  
+  
+          const totalPagesCount = Math.ceil(totalCount / coursesPerPage);
+          setTotalPages(totalPagesCount);
+  
+         
+          const response = await axios.get(`http://localhost:5002/api/getCourses?page=${currentPage}&limit=${coursesPerPage}`);
+          setCourses(response.data);
+      } catch (error) {
+          console.error("Error ", error);
+      }
+  };
+  
+    fetchData();
+  }, [currentPage]);
+  
+  const handlePageChange = (pageNumber: any) => {
+    setCurrentPage(pageNumber);
+    console.log(pageNumber);
+  };
+  
+
   const table = useReactTable({
-    data: courseData,
+    data: courses,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -370,7 +345,7 @@ const CourseTable = () => {
         />
         <div className="flex items-center">
           
-          <UserDialog/>
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -454,24 +429,10 @@ const CourseTable = () => {
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+        <div className="pt-8">
+    <Pagination_course totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+
+    </div>
       </div>
     </div>
   )

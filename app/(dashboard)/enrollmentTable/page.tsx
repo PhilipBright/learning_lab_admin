@@ -19,14 +19,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 
 
 import { Button } from "@/components/ui/button"
@@ -49,16 +41,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Enrollments, Student } from "@/constant"
-import { enrollmentData, userData }from "@/constant/data"
-import { Badge } from "@/components/ui/badge"
-import { Plus } from "lucide-react"
-import BreadCrumb from '@/components/blocks/BreadCrumb'
-import UserDialog from "@/components/dialogs/UserDialog"
 
 
 
-export const columns: ColumnDef<Enrollments>[] = [
+
+import Image from "next/image"
+import { Courses } from "@/constant/index"
+import axios from "axios"
+import { useEffect } from "react"
+import { Pagination_course } from "@/components/ui/Course_pagination"
+
+
+export const columns: ColumnDef<Courses>[] = [
+  
   {
     id: "select",
     header: ({ table }) => (
@@ -82,7 +77,7 @@ export const columns: ColumnDef<Enrollments>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "_id",
     header: ({ column }) => {
       return (
         <Button
@@ -94,22 +89,22 @@ export const columns: ColumnDef<Enrollments>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className=" w-16 truncate">{row.getValue("_id")}</div>,
   },
   {
-    accessorKey: "username",
+    accessorKey: "course_id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Username
+          Course ID
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("username")}</div>,
+    cell: ({ row }) => <div className=" w-48 truncate">{row.getValue("course_id")}</div>,
   },
   {
     accessorKey: "email",
@@ -119,107 +114,35 @@ export const columns: ColumnDef<Enrollments>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          User
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div>{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "payment",
+    accessorKey: "date",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Payment
+          Date
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="pl-6">{row.getValue("payment")}</div>,
-  },
-  {
-    accessorKey: "subscription",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Subscription
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className=" w-32 h-6 rounded-lg text-center border border-blue-300">{row.getValue("subscription")}</div>,
-  },
-  {
-    accessorKey: "total",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-         Amount
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="pl-7">${row.getValue("total")}</div>,
-  },
-  {
-    accessorKey: "purchaseDate",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Purchase Date
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div>{row.getValue("purchaseDate")}</div>,
+    cell: ({ row }) => <div>{row.getValue("date")}</div>,
   },
   
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const student = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(student.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
 ]
 
-const EnrollmentTable = () => {
+const CourseTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [courses, setCourses] = React.useState([]);
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
@@ -227,8 +150,33 @@ const EnrollmentTable = () => {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const [totalPages, setTotalPages] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const coursesPerPage = 6;
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+  
+         
+          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/enrollments`);
+          setCourses(response.data);
+      } catch (error) {
+          console.error("Error ", error);
+      }
+  };
+  
+    fetchData();
+  }, [currentPage]);
+  
+  const handlePageChange = (pageNumber: any) => {
+    setCurrentPage(pageNumber);
+    console.log(pageNumber);
+  };
+  
+
   const table = useReactTable({
-    data: enrollmentData,
+    data: courses,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -248,19 +196,19 @@ const EnrollmentTable = () => {
 
   return (
     <div className="w-full p-4">
-      <h1 className=' text-4xl font-bold'>Student Data</h1>
+      <h1 className=' text-4xl font-bold'>Enrollments</h1>
       <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+        {/* <Input
+          placeholder="Filter category..."
+          value={(table.getColumn("category")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("category")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        />
+        /> */}
         <div className="flex items-center">
           
-          <UserDialog/>
+     
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -344,26 +292,12 @@ const EnrollmentTable = () => {
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+        <div className="pt-8">
+    <Pagination_course totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+
+    </div>
       </div>
     </div>
   )
 }
-export default EnrollmentTable
+export default CourseTable

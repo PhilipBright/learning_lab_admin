@@ -19,15 +19,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -51,11 +42,9 @@ import {
 } from "@/components/ui/table"
 import { Instructor, Student } from "@/constant"
 import { instructorData }from "@/constant/data"
-import { Badge } from "@/components/ui/badge"
-import { Plus } from "lucide-react"
-import BreadCrumb from '@/components/blocks/BreadCrumb'
 import UserDialog from "@/components/dialogs/UserDialog"
 import Image from "next/image"
+import axios from "axios"
 
 
 
@@ -83,7 +72,7 @@ export const columns: ColumnDef<Instructor>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "_id",
     header: ({ column }) => {
       return (
         <Button
@@ -95,24 +84,9 @@ export const columns: ColumnDef<Instructor>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
+    cell: ({ row }) => <div>{row.getValue("_id")}</div>,
   },
-  {
-  accessorKey: "profile",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Profile
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-
-    cell: ({ row }) => <Image src={row.getValue("profile")} alt="profile" width={40} height={40}></Image>,
-  },
+  
   {
     accessorKey: "username",
     header: ({ column }) => {
@@ -146,19 +120,19 @@ export const columns: ColumnDef<Instructor>[] = [
   
  
   {
-    accessorKey: "registerDate",
+    accessorKey: "password",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Register Date
+         Password
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("registerDate")}</div>,
+    cell: ({ row }) => <div>{row.getValue("password")}</div>,
   },
   
   {
@@ -200,9 +174,27 @@ const TeacherTable = () => {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const [courses, setCourses] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+  
+         
+  
+         
+          const response = await axios.get(`http://localhost:5002/api/instructors`);
+          setCourses(response.data);
+      } catch (error) {
+          console.error("Error ", error);
+      }
+  };
+  
+    fetchData();
+  }, []);
 
   const table = useReactTable({
-    data: instructorData,
+    data: courses,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
