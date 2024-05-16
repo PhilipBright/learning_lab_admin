@@ -2,7 +2,7 @@
 const nextConfig = {
     output: `standalone`,
     images: {
-        domains: ['randomuser.me'],
+        domains: ['randomuser.me', 'aceternity.com', 'learninglabwebsite.s3.ap-southeast-1.amazonaws.com']
       },
 };
 

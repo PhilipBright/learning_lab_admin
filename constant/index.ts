@@ -1,11 +1,13 @@
 export type Student = {
     id: string
     username: string
-    enrollmentId: string
-    registerDate: String
     role: string
-    subscription: string
-    email: string
+    subscriptions: string
+    email: string,
+    password: string
+    payment: string
+    
+    
   }
   export type Instructor = {
     id: string
@@ -26,6 +28,8 @@ export type Student = {
     duration: string
     level: string
   }
+
+
 
   export type Subscriptions = {
     id: string
